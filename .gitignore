@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+smart-deal-client/node_modules/
+smart-deal-server/node_modules/
+
+# Build outputs
+smart-deal-client/dist/
+smart-deal-client/build/
+smart-deal-server/dist/
+smart-deal-server/build/
+
+# Environment files
+.env
+smart-deal-client/.env
+smart-deal-server/.env
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  themes: light --default;
+ }
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: blue;
+  /* --color-secondary: teal; */
+}
+.btn-primary-custom {
+  @apply btn text-white border-none bg-linear-to-br from-[#632EE3] to-[#9F62F2] hover:from-[#9F62F2] hover:to-[#632EE3] transition-all duration-300;
+}
+.text-primary-gradient {
+  @apply bg-linear-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent;
+  -webkit-background-clip: text;
+}
+.btn-outline-custom {
+  @apply btn btn-outline border-2 border-transparent text-white flex justify-center w-full;
+  background-image: linear-gradient(to right bottom, #632EE3, #9F62F2);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+
+
+
+
