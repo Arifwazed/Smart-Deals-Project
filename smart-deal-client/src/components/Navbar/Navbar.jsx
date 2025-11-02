@@ -4,16 +4,17 @@ import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
     const {user,logOut} = use(AuthContext)
+    const fallbackImg = "https://img.icons8.com/ios-filled/50/user-male-circle.png";
     const handleLogout = () => {
         logOut();
     }
     const links = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/allProducts">All Products</NavLink></li>
+        <li><NavLink to="/" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""}>Home</NavLink></li>
+        <li><NavLink to="/allProducts" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""}>All Products</NavLink></li>
         {
             user && <>
-                <li><NavLink to="/myProducts">My Products</NavLink></li>
-                <li><NavLink to="/myBids">My Bids</NavLink></li>
+                <li><NavLink to="/myProducts" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""} >My Products</NavLink></li>
+                <li><NavLink to="/myBids" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""} >My Bids</NavLink></li>
             </>
         }
     </>
@@ -38,9 +39,12 @@ const Navbar = () => {
                     {links}
                     </ul>
                 </div>
-                <div className="navbar-end">
+                <div className="navbar-end mr-2">
                     {
-                        user ? <button onClick={handleLogout} className="btn btn-primary-custom">Sign Out</button>: 
+                        user ? <div className='flex items-center gap-2'>
+                            <img src={user?.photoURL || fallbackImg} className='h-9 w-9 rounded-full' alt="" onError={(e)=> {e.target.style.display = 'none'}}/> <button onClick={handleLogout} className="btn btn-primary-custom">Sign Out</button>
+                        </div> 
+                        : 
                         <Link to="/register" className="btn">Register</Link>
                     }
                 </div>

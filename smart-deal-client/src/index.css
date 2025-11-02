@@ -6,7 +6,7 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+  --color-primary: #632EE3;
   /* --color-secondary: teal; */
 }
 .btn-primary-custom {
@@ -17,7 +17,7 @@
   -webkit-background-clip: text;
 }
 .btn-outline-custom {
-  @apply btn btn-outline border-2 border-transparent text-white flex justify-center w-full;
+  @apply btn btn-outline  border-transparent text-white;
   background-image: linear-gradient(to right bottom, #632EE3, #9F62F2);
   background-origin: border-box;
   background-clip: padding-box, border-box;
