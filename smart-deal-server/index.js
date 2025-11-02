@@ -12,7 +12,6 @@ console.log(process.env)
 
 // sNxCmYNFHcNbw2Vp
 // smart-deal-user
-// const uri = "mongodb+srv://smart-deal-user:sNxCmYNFHcNbw2Vp@cluster0.gafegcj.mongodb.net/?appName=Cluster0";
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.gafegcj.mongodb.net/?appName=Cluster0`;
 const client = new MongoClient(uri, {
   serverApi: {
