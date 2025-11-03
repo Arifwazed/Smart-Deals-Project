@@ -15,6 +15,7 @@ const Navbar = () => {
             user && <>
                 <li><NavLink to="/myProducts" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""} >My Products</NavLink></li>
                 <li><NavLink to="/myBids" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""} >My Bids</NavLink></li>
+                <li><NavLink to="" className={({isActive})=> isActive ? "text-primary-gradient font-bold" : ""} >Create Product</NavLink></li>
             </>
         }
     </>

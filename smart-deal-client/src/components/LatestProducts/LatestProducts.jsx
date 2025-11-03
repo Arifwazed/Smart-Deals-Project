@@ -13,7 +13,7 @@ const LatestProducts = ({latestPromise}) => {
                     products.map(product => <ProductCard key={product._id} product={product}></ProductCard>)
                 }
             </div>
-            <Link className='btn btn-primary-custom mt-10 mb-20'>Show All</Link>
+            <Link to="/allProducts" className='btn btn-primary-custom mt-10 mb-20'>Show All</Link>
         </div>
     );
 };
