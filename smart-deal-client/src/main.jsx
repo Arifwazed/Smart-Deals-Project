@@ -12,6 +12,7 @@ import MyProducts from './components/MyProducts/MyProducts';
 import MyBids from './components/MyBids/MyBids';
 import PrivateRoute from './context/PrivateRoute';
 import ProductDetails from './components/ProductDetails/ProductDetails';
+import CreateProduct from './components/CreateProduct/CreateProduct';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: 'myBids',
         element: <MyBids></MyBids>
+      },
+      {
+        path: 'createProduct',
+        element: <CreateProduct></CreateProduct>,
       },
       {
         path: 'productDetails/:id',

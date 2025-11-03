@@ -50,9 +50,11 @@ const MyBids = () => {
         });
     }
     return (
-        <div>
-            <h1 className='text-3xl font-bold mb-8 text-center'>My Bids: <span className='text-primary-gradient'>{myBids.length}</span></h1>
-            <div className="overflow-x-auto">
+        <div className='bg-linear-to-br from-[#FFE6FD] to-[#E0F8F5] min-h-screen'>
+            <div className='w-11/12 mx-auto py-10 md:py-15 text-center'>
+            <h1 className='text-4xl font-bold text-center mb-8'>My Bids: <span className='text-primary-gradient'>{myBids.length}</span></h1>
+            {/* <hr className='border-gray-400'/> */}
+            <div className="overflow-x-auto border border-gray-300 rounded-lg">
                     <table className="table">
                         {/* head */}
                         <thead>
@@ -107,6 +109,7 @@ const MyBids = () => {
                         {/* foot */}
                         
                     </table>
+            </div>
             </div>
         </div>
     );
