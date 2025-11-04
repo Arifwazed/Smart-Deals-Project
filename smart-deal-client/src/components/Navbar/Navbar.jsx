@@ -46,7 +46,7 @@ const Navbar = () => {
                             <img src={user?.photoURL || fallbackImg} className='h-9 w-9 rounded-full' alt="" onError={(e)=> {e.target.style.display = 'none'}}/> <button onClick={handleLogout} className="btn btn-primary-custom">Sign Out</button>
                         </div> 
                         : 
-                        <Link to="/register" className="btn">Register</Link>
+                        <Link to="/register" className="btn btn-primary-custom">Login</Link>
                     }
                 </div>
             </div>
