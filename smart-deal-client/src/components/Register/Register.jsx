@@ -1,8 +1,14 @@
 import React, { use } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 
 const Register = () => {
-    const {signInGoogle} = use(AuthContext)
+    const {signInGoogle} = use(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state || "/";
+    // console.log("from register:",location);
+
     const handleGoogleSubmit = () => {
         signInGoogle()
         .then(result => {
@@ -16,6 +22,7 @@ const Register = () => {
                 headers:  {'content-type' : 'application/json'},
                 body: JSON.stringify(newUser)
             })
+            navigate(from,{replace: true});
             console.log(result.user)
         })
         .catch(error => {

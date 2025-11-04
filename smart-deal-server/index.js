@@ -1,11 +1,71 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = process.env.PORT || 3000;
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./smart-deals-firebase-adminsdk.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
 app.use(cors())
 app.use(express.json())
+
+
+
+// middleware for client protection
+const logger = (req,res,next) => {
+    console.log("logging info")
+    next();
+}
+
+const verifyFireBaseToken = async(req,res,next) => {
+    // console.log(req.headers.authorization)
+    if(!req.headers.authorization){
+        return res.status(401).send({messsage: "unauthorized access1"})
+    }
+    const token = req.headers.authorization.split(' ')[1];
+    if(!token){
+        return res.status(401).send({messsage: "unauthorized access2"});
+    }
+    try{
+        const userInfo = await admin.auth().verifyIdToken(token);
+        req.token_email = userInfo.email;
+        console.log("after token validation: ",userInfo);
+        next();
+    }
+    catch{
+        console.log('error')
+        return res.status(401).send({messsage: "unauthorized access3"});
+    }
+}
+
+// jwt token
+const verifyJWTToken = async(req,res,next) => {
+    console.log('in the middleware jwt:',req.headers.authorization)
+    const authorization = req.headers.authorization;
+    if(!authorization){
+        return res.status(401).send({messsage: "unauthorized access1"})
+    }
+    const token = authorization.split(' ')[1];
+    if(!token){
+        return res.status(401).send({messsage: "unauthorized access2"})
+    }
+    jwt.verify(token,process.env.JWT_SECRET,(error,decoded)=>{
+        if(error){
+            return res.status(401).send({messsage: "unauthorized access2"})
+        }
+        console.log("after decoded:",decoded)
+        req.token_email = decoded.email;
+        next();
+    })
+}
 
 require('dotenv').config()
 console.log(process.env)
@@ -98,16 +158,36 @@ async function run() {
     })
 
     //// FOR BIDS DATA API /////
-    app.get('/bids', async(req,res)=> {
+    app.get('/bids',verifyJWTToken, async(req,res)=>{
+        // console.log('headers:',req.headers)
         const email = req.query.email;
         const query = {};
         if(email){
             query.buyer_email = email;
         }
+        if(email !== req.token_email){
+            return res.status(401).send({messsage: "forbidden access3"});
+        }
         const cursor = bidsCollection.find(query);
         const result = await cursor.toArray();
-        res.send(result);
+        res.send(result)
     })
+
+    // with firebase login verify
+    // app.get('/bids',logger,verifyFireBaseToken, async(req,res)=> {
+    //     // console.log("token: ",req.headers)
+    //     const email = req.query.email;
+    //     const query = {};
+    //     if(email){
+    //         if(email !== req.token_email){
+    //             return res.status(403).send({messsage: "forbidden access3"});
+    //         }
+    //         query.buyer_email = email;
+    //     }
+    //     const cursor = bidsCollection.find(query);
+    //     const result = await cursor.toArray();
+    //     res.send(result);
+    // })
 
     app.get('/products/bids/:productId',async(req,res)=>{
         const productId = req.params.productId;
@@ -145,6 +225,13 @@ async function run() {
             res.send(result)
         }
     })
+
+    ////// FOR JWT TOKEN API
+    app.post('/getToken',(req,res) => {
+        const loggedUser = req.body;
+        const token = jwt.sign(loggedUser,process.env.JWT_SECRET,{expiresIn: '1h'});
+        res.send({token :token});
+    }) 
     
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

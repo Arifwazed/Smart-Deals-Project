@@ -40,16 +40,23 @@ const router = createBrowserRouter([
       },
       {
         path: 'myBids',
-        element: <MyBids></MyBids>
+        element: <PrivateRoute>
+            <MyBids></MyBids>
+        </PrivateRoute>,
       },
       {
         path: 'createProduct',
-        element: <CreateProduct></CreateProduct>,
+        element: <PrivateRoute>
+            <CreateProduct></CreateProduct>
+        </PrivateRoute>,
       },
       {
         path: 'productDetails/:id',
         loader: ({params}) => fetch(`http://localhost:3000/products/${params.id}`),
-        Component: ProductDetails,
+        // Component: ProductDetails,
+        element: <PrivateRoute>
+            <ProductDetails></ProductDetails>
+        </PrivateRoute>,
       }
     ]
   },

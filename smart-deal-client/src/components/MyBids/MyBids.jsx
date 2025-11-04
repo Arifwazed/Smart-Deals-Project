@@ -4,17 +4,38 @@ import Swal from 'sweetalert2';
 
 const MyBids = () => {
     const {user} = use(AuthContext);
+    // console.log("token", user.accessToken)
     const [myBids,setMyBids] = useState([]);
+    
     useEffect(()=>{
         if(user?.email){
-            fetch(`http://localhost:3000/bids?email=${user?.email}`)
+            fetch(`http://localhost:3000/bids?email=${user?.email}`,{
+                headers: {
+                    authorization : `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then(res => res.json())
             .then(data => {
                 console.log("my bid: ",data)
                 setMyBids(data)
             })
         }
-    },[user?.email])
+    },[user])
+
+    // useEffect(()=>{
+    //     if(user?.email){
+    //         fetch(`http://localhost:3000/bids?email=${user?.email}`,{
+    //             headers: {
+    //                 authorization : `Bearer ${user.accessToken}`
+    //             }
+    //         })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log("my bid: ",data)
+    //             setMyBids(data)
+    //         })
+    //     }
+    // },[user])
 
     const handleRemoveBit = (id) => {
         console.log("remove bid id: ", id);
@@ -71,7 +92,7 @@ const MyBids = () => {
                         {/* row 1 */}
                         {
                             myBids.map((bid,index) => 
-                                <tr>
+                                <tr key={index}>
                                     <th> {index+1}</th>
                                     <td>
                                      {bid.product_title}
