@@ -30,7 +30,7 @@ const ProductDetails = () => {
             bid_price : bid,
             status: "pending",
         }
-        fetch('http://localhost:3000/bids',{
+        fetch('https://smart-deal-server-nu.vercel.app/bids',{
             method: "POST",
             headers: {
                 'content-type' : 'application/json'
@@ -58,7 +58,7 @@ const ProductDetails = () => {
     }
 
     useEffect(()=>{
-        fetch(`http://localhost:3000/products/bids/${_id}`)
+        fetch(`https://smart-deal-server-nu.vercel.app/products/bids/${_id}`)
         .then(res => res.json())
         .then(data => {
             console.log('Bid for the products: ',data)

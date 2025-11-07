@@ -3,7 +3,7 @@ import LatestProducts from '../LatestProducts/LatestProducts';
 import LoaderSpin from './LoaderSpin';
 import Banner from './Banner';
 
-const latestPromise = fetch('http://localhost:3000/latestproducts').then(res => res.json())
+const latestPromise = fetch('https://smart-deal-server-nu.vercel.app/latestproducts').then(res => res.json())
 const Home = () => {
     const [loading,setLoading] = useState(false);
     return (
