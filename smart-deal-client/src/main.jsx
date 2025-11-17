@@ -13,11 +13,13 @@ import MyBids from './components/MyBids/MyBids';
 import PrivateRoute from './context/PrivateRoute';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import CreateProduct from './components/CreateProduct/CreateProduct';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
